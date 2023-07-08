@@ -102,19 +102,24 @@ function updateCartTotal() {
   let cartRows = cartItemContainer.querySelectorAll(".cart-row");
   let total = 0;
 
-  // PROCESS SECTION
+  // PROCESS SECTION LOOP 
   for (let i = 0; i < cartRows.length; i++) {
     //Add code here to loop in all the albums that is added to the cart and get the total amount
     let grossPrice = cartRows[i].querySelector(".cart-price");
+    // TO MAKE netPrice become Number
     let netPrice = parseFloat(grossPrice.textContent.replace("$", ""));
+    // TO GET VALUE OF QUANTITY PER INDEX
     let itemQuantity = cartRows[i].querySelector(".cart-quantity-input");
+    // TRANSFER VALUE TO INTEGER
     let quantity = parseInt(itemQuantity.value)
+    // COMPUTATION
     if(!isNaN(quantity)){
-      let subtotal = netPrice * quantity
-      total += subtotal;
+      let subTotal = netPrice * quantity
+      total += subTotal;
     }
   }
 
+  // FIXED-POINT NOTATION
   total = total.toFixed(2);
 
   // REDISPLAY CURRENCY SYMBOL AND DISPLAY TOTAL
