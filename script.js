@@ -86,11 +86,11 @@ function addItemToCart(title, price, imageSrc) {
         </div>`;
   cartRow.innerHTML = cartRowContents;
   cartItems.append(cartRow);
-  // EVENT LISTENER DELETE ROW
+  // Event Listener Delete Item
   cartRow
     .querySelectorAll(".btn-danger")[0]
     .addEventListener("click", removeCartItem);
-  // EVENT LISTENER UPDATE QTY VALUE
+    // Event Listener Update Quantity value
   cartRow
     .querySelectorAll(".cart-quantity-input")[0]
     .addEventListener("change", quantityChanged);
@@ -103,18 +103,12 @@ function updateCartTotal() {
   // ROW ITEM
   let cartRows = cartItemContainer.querySelectorAll(".cart-row");
   let total = 0;
+
   for (let i = 0; i < cartRows.length; i++) {
-    let cartRow = cartRows[i];
-    let priceElement = cartRow.getElementsByClassName("cart-prize")[0];
-    let quantityElement = cartRow.getElementsByClassName(
-      "cart-quantity-input"
-    )[0];
-    var price = parseFloat(priceElement.innerText.replace("$", ""));
-    var quantity = quantityElement.value;
-    total = total + (price + quantity);
+    //Add code here to loop in all the albums that is added to the cart and get the total amount
   }
 
-  total = Math.round(total * 100) / 100;
+  total = total.toFixed(2);
 
   document.querySelectorAll(".cart-total-price")[0].innerText = "$" + total;
 }
