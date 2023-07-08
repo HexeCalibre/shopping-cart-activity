@@ -19,7 +19,6 @@ for (let i = 0; i < addToCartButtons.length; i++) {
   button.addEventListener("click", addToCartClicked);
 }
 
-
 // EVENT LISTENER PURCHASE BUTTON
 document
   .querySelectorAll(".btn-purchase")[0]
@@ -34,6 +33,7 @@ function purchaseClicked() {
   }
   updateCartTotal();
 }
+
 // FUNCTION DELETE ITEM
 function removeCartItem(event) {
   let buttonClicked = event.target;
@@ -60,7 +60,8 @@ function addToCartClicked(event) {
   addItemToCart(title, price, imageSrc);
   updateCartTotal();
 }
-// FUNCTION ADD TO CART BUTTON
+
+// ADD TO CART ROW ITEM RENDER
 function addItemToCart(title, price, imageSrc) {
   let cartRow = document.createElement("div");
   cartRow.classList.add("cart-row");
@@ -72,8 +73,7 @@ function addItemToCart(title, price, imageSrc) {
       return;
     }
   }
-
-// ADD TO CART ROW ITEM RENDER
+  // ADD TO CART ROW ITEM RENDER
   let cartRowContents = `
         <div class="cart-item cart-column">
             <img class="cart-item-image" src="${imageSrc}" width="100" height="100">
@@ -86,11 +86,11 @@ function addItemToCart(title, price, imageSrc) {
         </div>`;
   cartRow.innerHTML = cartRowContents;
   cartItems.append(cartRow);
-  // Event Listener Delete Item
+  //EVENT LISTENER DELETE ITEM
   cartRow
     .querySelectorAll(".btn-danger")[0]
     .addEventListener("click", removeCartItem);
-    // Event Listener Update Quantity value
+    // EVENT LISTENER QUANTITY VALUE
   cartRow
     .querySelectorAll(".cart-quantity-input")[0]
     .addEventListener("change", quantityChanged);
@@ -98,17 +98,25 @@ function addItemToCart(title, price, imageSrc) {
 
 // DISPLAY
 function updateCartTotal() {
-  // PARENT OR WRAPPER CONTAINER
   let cartItemContainer = document.querySelector(".cart-items");
-  // ROW ITEM
   let cartRows = cartItemContainer.querySelectorAll(".cart-row");
   let total = 0;
 
+  // PROCESS SECTION
   for (let i = 0; i < cartRows.length; i++) {
     //Add code here to loop in all the albums that is added to the cart and get the total amount
+    let grossPrice = cartRows[i].querySelector(".cart-price");
+    let netPrice = parseFloat(grossPrice.textContent.replace("$", ""));
+    let itemQuantity = cartRows[i].querySelector(".cart-quantity-input");
+    let quantity = parseInt(itemQuantity.value)
+    if(!isNaN(quantity)){
+      let subtotal = netPrice * quantity
+      total += subtotal;
+    }
   }
 
   total = total.toFixed(2);
 
+  // REDISPLAY CURRENCY SYMBOL AND DISPLAY TOTAL
   document.querySelectorAll(".cart-total-price")[0].innerText = "$" + total;
 }
