@@ -86,9 +86,11 @@ function addItemToCart(title, price, imageSrc) {
         </div>`;
   cartRow.innerHTML = cartRowContents;
   cartItems.append(cartRow);
+  // EVENT LISTENER DELETE ROW
   cartRow
     .querySelectorAll(".btn-danger")[0]
     .addEventListener("click", removeCartItem);
+  // EVENT LISTENER UPDATE QTY VALUE
   cartRow
     .querySelectorAll(".cart-quantity-input")[0]
     .addEventListener("change", quantityChanged);
